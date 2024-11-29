@@ -72,13 +72,14 @@ class AdminController extends Controller
     public function studentIndex()
     {
         $advisor = Auth::guard('advisors')->user();
-        $Student = Student::with(['academic_year'])->orderBy('id', 'asc')->get();
+        $Student = Student::with(['academic_year', 'project_group'])->orderBy('id', 'asc')->get();
 
         return view('admin.student.index', compact('advisor', 'Student'));
     }
 
     public function studentCreate()
     {
+        // $students = Student::with(['academic_year', 'project_group'])->orderBy('id', 'asc')->get();
         $academicYears = AcademicYear::all(); // Fetch all academic years
         $majors = Major::all(); // Fetch all majors
         return view('admin.student.create', compact('academicYears', 'majors'));

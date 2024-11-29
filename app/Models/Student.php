@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Model
+class Student extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\AdvisorFactory> */
     use HasFactory;
+
+    protected $table = 'students'; // ชื่อตารางในฐานข้อมูล
 
     protected $fillable = ['s_id', 's_fname', 's_lname', 's_password', 'm_id', 'ac_id', 'status'];
 
@@ -16,23 +17,45 @@ class Student extends Model
         's_password', // ซ่อนรหัสผ่าน
     ];
 
-    public function getNameAttribute()
-    {
-        return $this->s_fname;
-    }
-
+    /**
+     * ระบุฟิลด์สำหรับรหัสผ่านที่ใช้ในการตรวจสอบสิทธิ์
+     */
     public function getAuthPassword()
     {
-        return $this->s_password; // ระบุรหัสผ่านที่ใช้สำหรับการ Auth
+        return $this->s_password;
     }
 
+    /**
+     * Accessor to get the student's first name.
+     */
+    public function getNameAttribute()
+    {
+        return $this->s_fname . ' ' . $this->s_lname;
+    }
+
+    /**
+     * Relationship to the AcademicYear model.
+     */
     public function academic_year()
+    {
+        return $this->belongsTo(AcademicYear::class, 'ac_id', 'id');
+    }
+
+    /**
+     * Relationship to the Major model.
+     */
+    public function major()
+    {
+        return $this->belongsTo(Major::class, 'm_id', 'id');
+    }
+
+    public function project_group()
 	{
-		return $this->belongsTo(AcademicYear::class, 'ac_id', 'id' );
+		return $this->belongsTo(ProjectGroup::class, 'group_id');
 	}
 
-    public function major()
+    public function group_members()
 	{
-		return $this->belongsTo(Major::class, 'm_id', 'id');
+		return $this->hasMany(GroupMember::class, 's_id');
 	}
 }

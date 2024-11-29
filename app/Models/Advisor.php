@@ -27,11 +27,6 @@ class Advisor extends Authenticatable
         'a_password',
     ];
 
-    public function getNameAttribute()
-    {
-        return $this->a_fname;
-    }
-
     public function getAuthPassword()
     {
         return $this->a_password; // ระบุรหัสผ่านที่ใช้สำหรับการ Auth
@@ -41,4 +36,14 @@ class Advisor extends Authenticatable
 	{
 		return $this->belongsTo(Major::class, 'm_id', 'id');
 	}
+
+    public function proposes()
+	{
+		return $this->hasMany(Propose::class, 'a_id');
+	}
+
+    public function getNameAttribute()
+    {
+        return $this->a_fname . ' ' . $this->a_lname;
+    }
 }

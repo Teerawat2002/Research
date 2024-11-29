@@ -46,7 +46,26 @@
             </li>
         </ul> --}}
 
+
+        <ul class="space-y-2 font-medium">
+            <!-- calender -->
+            <li>
+                <a href="{{route ('teacher.calendar.home')}}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i
+                        class="fas fa-solid fa-calendar-days text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
+                    <span class="ms-3">ปฏิทินการการดำเนินงาน</span>
+                </a>
+            </li>
+        </ul>
+
         <!-- Admin menu -->
+        @if (Auth::guard('advisors')->check() && Auth::guard('advisors')->user()->a_type === 'admin')
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="px-2 text-lg font-semibold text-gray-900 dark:text-white">
+                เมนูผู้ดูแลระบบ
+            </h3>
+        </div>
         <ul class="space-y-2 font-medium">
 
             <!-- จัดการหัวข้อ -->
@@ -150,12 +169,19 @@
             </li>
         </ul>
         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700"></ul>
+        @endif
 
         <!-- Teacher menu -->
+        @if (Auth::guard('advisors')->check() && Auth::guard('advisors')->user()->a_type === 'teacher')
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="px-2 text-lg font-semibold text-gray-900 dark:text-white">
+                เมนูอาจารย์รายวิชา
+            </h3>
+        </div>
         <ul class="space-y-2 font-medium">
             <!-- calender -->
             <li>
-                <a href="#"
+                <a href="{{route ('teacher.calendar.index')}}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i
                         class="fas fa-solid fa-calendar-days text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
@@ -184,12 +210,19 @@
             </li>
         </ul>
         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700"></ul>
+        @endif
 
         <!-- Advisor menu -->
+        @if (Auth::guard('advisors')->check() && in_array(Auth::guard('advisors')->user()->a_type, ['advisor', 'teacher']))
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="px-2 text-lg font-semibold text-gray-900 dark:text-white">
+                เมนูอาจารย์ที่ปรึกษา
+            </h3>
+        </div>
         <ul class="space-y-2 font-medium">
             <!-- Dashboard -->
             <li>
-                <a href="#"
+                <a href="{{ route ('advisor.propose.index')}}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i
                         class="fas fa-solid fa-book-bookmark text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
@@ -246,15 +279,61 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">อัพโหลดโครงงาน</span>
                 </a>
             </li>
-
         </ul>
         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700"></ul>
+        @endif
 
-        <!-- Student menu -->
+        <!-- Advisor menu -->
+        @if (Auth::guard('advisors')->check() && Auth::guard('advisors')->user()->a_type !== 'admin')
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="px-2 text-lg font-semibold text-gray-900 dark:text-white">
+                เมนูกรรมการ
+            </h3>
+        </div>
         <ul class="space-y-2 font-medium">
             <!-- Dashboard -->
             <li>
                 <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i
+                        class="fas fa-solid fa-table-columns text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
+                    <span class="ms-3">รายการที่เป็นกรรมการ</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i
+                        class="fas fa-solid fa-clipboard-list text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
+                    <span class="ms-3">ให้คะแนน</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i
+                        class="fas fa-solid fa-file-pen text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
+                    <span class="ms-3">การแก้ไข</span>
+                </a>
+            </li>
+
+        </ul>
+        <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700"></ul>
+        @endif
+
+        <!-- Student menu -->
+        @if (Auth::guard('students')->check())
+        <div class="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="px-2 text-lg font-semibold text-gray-900 dark:text-white">
+                เมนูนักศึกษา
+            </h3>
+        </div>
+        <ul class="space-y-2 font-medium">
+            <!-- Dashboard -->
+            <li>
+                <a href="{{ route('student.group.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i
                         class="fas fa-users text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
@@ -264,7 +343,7 @@
 
             <!-- Users -->
             <li>
-                <a href="#"
+                <a href="{{ route('student.propose.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i
                         class="fas fa-solid fa-book-bookmark text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></i>
@@ -301,8 +380,8 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">ยื่นอัพโหลดโครงงาน</span>
                 </a>
             </li>
-
         </ul>
+        @endif
 
         <!-- Logout -->
         {{-- <div class="absolute bottom-0 left-0 w-full">

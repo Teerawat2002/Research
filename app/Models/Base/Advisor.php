@@ -7,7 +7,9 @@
 namespace App\Models\Base;
 
 use App\Models\Major;
+use App\Models\Propose;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Major $major
+ * @property Collection|Propose[] $proposes
  *
  * @package App\Models\Base
  */
@@ -40,5 +43,10 @@ class Advisor extends Model
 	public function major()
 	{
 		return $this->belongsTo(Major::class, 'm_id');
+	}
+
+	public function proposes()
+	{
+		return $this->hasMany(Propose::class, 'a_id');
 	}
 }

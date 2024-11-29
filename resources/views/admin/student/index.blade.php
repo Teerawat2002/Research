@@ -135,6 +135,9 @@
                                         Academic year
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Project Group
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Status
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -165,6 +168,9 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $user->academic_year->year }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $user->project_group->id ?? ''}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $user->status }}
